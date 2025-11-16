@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extensiones Recomendadas para VS Code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2c3e50, #3498db, #9b59b6);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #3498db, #9b59b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+        }
+        
+        /* Estilos del buscador */
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 18px 60px 18px 25px;
+            font-size: 1.1rem;
+            border: 3px solid #3498db;
+            border-radius: 50px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            background: white;
+        }
+        
+        .search-box:focus {
+            border-color: #9b59b6;
+            box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #3498db;
+            font-size: 1.4rem;
+            transition: color 0.3s ease;
+        }
+        
+        .search-box:focus + .search-icon {
+            color: #9b59b6;
+        }
+        
+        .search-results {
+            margin-top: 12px;
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            margin: 30px 0;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .no-results h3 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .category-card {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-header {
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        .category-header h2 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .category-header h2::before {
+            content: "⚡";
+            margin-right: 12px;
+            font-size: 1.4rem;
+        }
+        
+        .extensions-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .extension-item {
+            padding: 18px 25px;
+            border-bottom: 1px solid #f1f3f4;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .extension-item:last-child {
+            border-bottom: none;
+        }
+        
+        .extension-item:hover {
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+        
+        .extension-item::before {
+            content: "▸";
+            position: absolute;
+            left: 10px;
+            color: #3498db;
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .extension-item:hover::before {
+            transform: translateX(3px);
+            color: #9b59b6;
+        }
+        
+        .extension-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        
+        .extension-content {
+            flex: 1;
+        }
+        
+        .extension-name {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .extension-description {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .extension-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        
+        .tag {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            border-radius: 3px;
+            padding: 1px 4px;
+            font-weight: 600;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .footer-note {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            color: white;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .category-header h2 {
+                font-size: 1.3rem;
+            }
+            
+            .extension-item {
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Extensiones de VS Code</h1>
+            <p class="subtitle">Mejora tu productividad con estas extensiones esenciales</p>
+            
+            <!-- Buscador -->
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-box" placeholder="Buscar extensiones por nombre, categoría o descripción...">
+                <div class="search-icon">🔍</div>
+                <div class="search-results" id="searchResults">Escribe para buscar extensiones</div>
+            </div>
+        </header>
+        
+        <div class="no-results" id="noResults">
+            <h3>No se encontraron extensiones</h3>
+            <p>Intenta con otros términos de búsqueda o revisa las categorías disponibles</p>
+        </div>
+        
+        <main class="content-grid" id="contentGrid">
+            <!-- Lenguajes de Programación -->
+            <div class="category-card" data-category="lenguajes programacion desarrollo">
+                <div class="category-header">
+                    <h2>Lenguajes de Programación</h2>
+                </div>
+                <div class="category-content">
+                    <ul class="extensions-list">
+                        <li class="extension-item" data-search="python desarrollo web data science IA">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #3776AB, #306998);">Py</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Python</div>
+                                <div class="extension-description">Soporte completo para el lenguaje Python con IntelliSense, debugging, linting y más</div>
+                                <div class="extension-tags">
+                                    <span class="tag">IntelliSense</span>
+                                    <span class="tag">Debugging</span>
+                                    <span class="tag">Jupyter</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="c c++ desarrollo sistemas embedded">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #659AD2, #004482);">C++</div>
+                            <div class="extension-content">
+                                <div class="extension-name">C/C++</div>
+                                <div class="extension-description">Soporte para C y C++ con IntelliSense, debugging y compilación</div>
+                                <div class="extension-tags">
+                                    <span class="tag">IntelliSense</span>
+                                    <span class="tag">Debugging</span>
+                                    <span class="tag">Compilación</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Herramientas de Desarrollo -->
+            <div class="category-card" data-category="herramientas desarrollo productividad">
+                <div class="category-header">
+                    <h2>Herramientas de Desarrollo</h2>
+                </div>
+                <div class="category-content">
+                    <ul class="extensions-list">
+                        <li class="extension-item" data-search="amazon q ai asistente codigo">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #FF9900, #232F3E);">Q</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Amazon Q</div>
+                                <div class="extension-description">Asistente de IA para desarrollo que ayuda a escribir, debuggear y optimizar código</div>
+                                <div class="extension-tags">
+                                    <span class="tag">IA</span>
+                                    <span class="tag">Asistente</span>
+                                    <span class="tag">Productividad</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="gitlens git control versiones historial">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #F05032, #E44C30);">Git</div>
+                            <div class="extension-content">
+                                <div class="extension-name">GitLens</div>
+                                <div class="extension-description">Mejora las capacidades de Git integradas en VS Code con información del historial</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Git</span>
+                                    <span class="tag">Historial</span>
+                                    <span class="tag">Blame</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="live share colaboracion codigo compartir">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #6C5CE7, #A29BFE);">LS</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Live Share</div>
+                                <div class="extension-description">Colaboración en tiempo real para editar y debuggear código en equipo</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Colaboración</span>
+                                    <span class="tag">Tiempo Real</span>
+                                    <span class="tag">Debugging</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="eslint javascript typescript linting calidad">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #4B32C3, #7B6FF4);">ES</div>
+                            <div class="extension-content">
+                                <div class="extension-name">ESLint</div>
+                                <div class="extension-description">Integración de ESLint para identificar problemas en código JavaScript/TypeScript</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Linting</span>
+                                    <span class="tag">JavaScript</span>
+                                    <span class="tag">TypeScript</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="prettier formateo codigo estilo consistente">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #56B3B4, #1A2B34);">P</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Prettier</div>
+                                <div class="extension-description">Formateador de código que asegura un estilo consistente en el proyecto</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Formateo</span>
+                                    <span class="tag">Estilo</span>
+                                    <span class="tag">Consistencia</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Visualización y Presentación -->
+            <div class="category-card" data-category="visualizacion presentacion colores imagenes">
+                <div class="category-header">
+                    <h2>Visualización y Presentación</h2>
+                </div>
+                <div class="category-content">
+                    <ul class="extensions-list">
+                        <li class="extension-item" data-search="color highlight colores visualizacion css">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #E74C3C, #C0392B);">C</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Color Highlight</div>
+                                <div class="extension-description">Muestra los colores CSS directamente en el editor con su representación visual</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Colores</span>
+                                    <span class="tag">CSS</span>
+                                    <span class="tag">Visualización</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="image preview imagenes visualizacion archivos">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">Img</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Image Preview</div>
+                                <div class="extension-description">Muestra vistas previas de imágenes en el gutter del editor al pasar el cursor</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Imágenes</span>
+                                    <span class="tag">Preview</span>
+                                    <span class="tag">Visualización</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="indent rainbow indentacion guias visuales">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #27AE60, #229954);">IR</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Indent-Rainbow</div>
+                                <div class="extension-description">Colorea la indentación del código para una mejor visualización de la estructura</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Indentación</span>
+                                    <span class="tag">Colores</span>
+                                    <span class="tag">Estructura</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="bracket pair colorization llaves parentesis corchetes">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #F39C12, #E67E22);">BP</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Bracket Pair Colorization</div>
+                                <div class="extension-description">Colorea los pares de brackets, llaves y paréntesis para mejor legibilidad</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Brackets</span>
+                                    <span class="tag">Colores</span>
+                                    <span class="tag">Legibilidad</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="better comments comentarios colores organizacion">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #3498DB, #2980B9);">BC</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Better Comments</div>
+                                <div class="extension-description">Mejora la apariencia de los comentarios con colores y categorías visuales</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Comentarios</span>
+                                    <span class="tag">Organización</span>
+                                    <span class="tag">Colores</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Desarrollo Web -->
+            <div class="category-card" data-category="web desarrollo html css servidor">
+                <div class="category-header">
+                    <h2>Desarrollo Web</h2>
+                </div>
+                <div class="category-content">
+                    <ul class="extensions-list">
+                        <li class="extension-item" data-search="live server servidor local desarrollo web">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #E74C3C, #C0392B);">LS</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Live Server</div>
+                                <div class="extension-description">Lanza un servidor de desarrollo local con recarga automática para proyectos web</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Servidor</span>
+                                    <span class="tag">Recarga Automática</span>
+                                    <span class="tag">Web</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="auto close tag html cierre automatico etiquetas">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #E67E22, #D35400);">ACT</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Auto Close Tag</div>
+                                <div class="extension-description">Cierra automáticamente las etiquetas HTML/XML al escribir</div>
+                                <div class="extension-tags">
+                                    <span class="tag">HTML</span>
+                                    <span class="tag">XML</span>
+                                    <span class="tag">Productividad</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="auto rename tag html renombre automatico etiquetas">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #27AE60, #229954);">ART</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Auto Rename Tag</div>
+                                <div class="extension-description">Renombra automáticamente la etiqueta de cierre al modificar la de apertura en HTML</div>
+                                <div class="extension-tags">
+                                    <span class="tag">HTML</span>
+                                    <span class="tag">XML</span>
+                                    <span class="tag">Productividad</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="live preview html visualizacion navegador">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">LP</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Live Preview</div>
+                                <div class="extension-description">Muestra una vista previa en tiempo real de archivos HTML en un servidor integrado</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Preview</span>
+                                    <span class="tag">HTML</span>
+                                    <span class="tag">Navegador</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="path intellisense autocompletado rutas archivos">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #3498DB, #2980B9);">PI</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Path Intellisense</div>
+                                <div class="extension-description">Autocompletado inteligente para rutas de archivos en imports y requires</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Autocompletado</span>
+                                    <span class="tag">Rutas</span>
+                                    <span class="tag">Productividad</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Temas e Iconos -->
+            <div class="category-card" data-category="temas iconos personalizacion apariencia">
+                <div class="category-header">
+                    <h2>Temas e Iconos</h2>
+                </div>
+                <div class="category-content">
+                    <ul class="extensions-list">
+                        <li class="extension-item" data-search="material icon theme iconos google material design">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #4285F4, #34A853);">MI</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Material Icon Theme</div>
+                                <div class="extension-description">Iconos basados en Material Design para el explorador de archivos de VS Code</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Iconos</span>
+                                    <span class="tag">Material Design</span>
+                                    <span class="tag">Apariencia</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="vscode icons iconos personalizacion explorador">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #007ACC, #005A9E);">VI</div>
+                            <div class="extension-content">
+                                <div class="extension-name">VSCode Icons</div>
+                                <div class="extension-description">Paquete de iconos oficial para VS Code que mejora la apariencia del explorador</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Iconos</span>
+                                    <span class="tag">Oficial</span>
+                                    <span class="tag">Apariencia</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Captura y Compartición -->
+            <div class="category-card" data-category="captura codigo screenshot compartir">
+                <div class="category-header">
+                    <h2>Captura y Compartición</h2>
+                </div>
+                <div class="category-content">
+                    <ul class="extensions-list">
+                        <li class="extension-item" data-search="polacode captura codigo polaroid screenshot">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #2C3E50, #34495E);">P</div>
+                            <div class="extension-content">
+                                <div class="extension-name">Polacode</div>
+                                <div class="extension-description">Toma capturas de código con estilo Polaroid para compartir en redes sociales</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Captura</span>
+                                    <span class="tag">Screenshot</span>
+                                    <span class="tag">Compartir</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="extension-item" data-search="codesnap captura codigo screenshot imagen">
+                            <div class="extension-icon" style="background: linear-gradient(135deg, #E74C3C, #C0392B);">CS</div>
+                            <div class="extension-content">
+                                <div class="extension-name">CodeSnap</div>
+                                <div class="extension-description">Toma capturas de pantalla bonitas de tu código con resaltado de sintaxis</div>
+                                <div class="extension-tags">
+                                    <span class="tag">Captura</span>
+                                    <span class="tag">Screenshot</span>
+                                    <span class="tag">Imagen</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+        
+        <div class="footer-note">
+            <p>💡 <strong>Consejo:</strong> Instala solo las extensiones que realmente necesites para mantener VS Code rápido y responsive</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            const noResults = document.getElementById('noResults');
+            const contentGrid = document.getElementById('contentGrid');
+            const categoryCards = document.querySelectorAll('.category-card');
+            const extensionItems = document.querySelectorAll('.extension-item');
+            
+            // Función para realizar la búsqueda
+            function performSearch(searchTerm) {
+                searchTerm = searchTerm.toLowerCase().trim();
+                let foundCount = 0;
+                
+                // Si el término de búsqueda está vacío, mostrar todo
+                if (searchTerm === '') {
+                    categoryCards.forEach(card => card.classList.remove('hidden'));
+                    extensionItems.forEach(item => {
+                        item.classList.remove('hidden');
+                        // Remover resaltado
+                        const name = item.querySelector('.extension-name');
+                        const description = item.querySelector('.extension-description');
+                        if (name) name.innerHTML = name.textContent;
+                        if (description) description.innerHTML = description.textContent;
+                    });
+                    noResults.style.display = 'none';
+                    searchResults.textContent = 'Escribe para buscar extensiones';
+                    return;
+                }
+                
+                // Buscar en tarjetas de categoría
+                categoryCards.forEach(card => {
+                    const category = card.getAttribute('data-category') || '';
+                    if (category.includes(searchTerm)) {
+                        card.classList.remove('hidden');
+                        foundCount++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+                
+                // Buscar en elementos de extensión
+                extensionItems.forEach(item => {
+                    const searchData = item.getAttribute('data-search') || '';
+                    const name = item.querySelector('.extension-name');
+                    const description = item.querySelector('.extension-description');
+                    
+                    if (searchData.includes(searchTerm) || 
+                        name.textContent.toLowerCase().includes(searchTerm) ||
+                        description.textContent.toLowerCase().includes(searchTerm)) {
+                        
+                        item.classList.remove('hidden');
+                        foundCount++;
+                        
+                        // Resaltar el término de búsqueda
+                        if (name) {
+                            name.innerHTML = highlightText(name.textContent, searchTerm);
+                        }
+                        if (description) {
+                            description.innerHTML = highlightText(description.textContent, searchTerm);
+                        }
+                        
+                        // Asegurarse de que la tarjeta padre sea visible
+                        const parentCard = item.closest('.category-card');
+                        if (parentCard) {
+                            parentCard.classList.remove('hidden');
+                        }
+                    } else {
+                        item.classList.add('hidden');
+                        // Remover resaltado si no coincide
+                        if (name) name.innerHTML = name.textContent;
+                        if (description) description.innerHTML = description.textContent;
+                    }
+                });
+                
+                // Mostrar resultados
+                if (foundCount > 0) {
+                    noResults.style.display = 'none';
+                    searchResults.textContent = `Se encontraron ${foundCount} extensiones para "${searchTerm}"`;
+                } else {
+                    noResults.style.display = 'block';
+                    searchResults.textContent = `No se encontraron extensiones para "${searchTerm}"`;
+                }
+            }
+            
+            // Función para resaltar texto
+            function highlightText(text, searchTerm) {
+                if (!searchTerm) return text;
+                
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                return text.replace(regex, '<span class="highlight">$1</span>');
+            }
+            
+            // Event listener para el campo de búsqueda
+            searchInput.addEventListener('input', function() {
+                performSearch(this.value);
+            });
+            
+            // Event listener para la tecla Escape
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    this.value = '';
+                    performSearch('');
+                }
+            });
+            
+            // Focus automático en el buscador
+            searchInput.focus();
+        });
+    </script>
+</body>
+</html>

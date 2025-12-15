@@ -20,4 +20,5 @@ better comments
 path intellisense 
 vscode icons 
 live preview
+JavaScript and TypeScript Nightly
 

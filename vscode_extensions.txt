@@ -21,4 +21,5 @@ path intellisense
 vscode icons 
 live preview
 JavaScript and TypeScript Nightly
+Tailwind CSS IntelliSense
 

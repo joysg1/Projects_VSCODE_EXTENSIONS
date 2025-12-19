@@ -18,7 +18,9 @@
 
     Guarda el script como install_vscode_extensions.sh
 
-    Ejecuta: bash install_vscode_extensions.sh
+    Ejecuta: 
+    sudo chmod +x install_vscode_extensions.sh
+    ./install_vscode_extensions.sh
 
     Confirma la instalación
 
